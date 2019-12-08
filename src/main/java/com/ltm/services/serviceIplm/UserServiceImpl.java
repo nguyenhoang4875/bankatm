@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean transferMoney(User user,TransferInfor transferInfor) {
+    public boolean transferMoney(User user, TransferInfor transferInfor) {
         return userDao.transferMoney(user, transferInfor);
     }
 }

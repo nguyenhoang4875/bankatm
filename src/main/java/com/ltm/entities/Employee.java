@@ -2,7 +2,7 @@ package com.ltm.entities;
 
 public class Employee {
     private Integer id;
-    private  String name;
+    private String name;
     private String dob;
     private String department;
 
@@ -51,6 +51,6 @@ public class Employee {
 
     @Override
     public String toString() {
-       return  String.join(" - ",name,dob,department);
+        return String.join(" - ", name, dob, department);
     }
 }

@@ -24,7 +24,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank_atm?useSSL=false&autoReconnect=true","root" , "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank_atm?useSSL=false&autoReconnect=true", "root", "root");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

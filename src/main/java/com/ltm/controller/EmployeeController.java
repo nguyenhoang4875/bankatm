@@ -1,7 +1,6 @@
 package com.ltm.controller;
 
 
-
 import com.ltm.entities.Employee;
 import com.ltm.services.EmployeeService;
 import com.ltm.services.serviceIplm.EmployeeServiceIplm;
@@ -103,9 +102,9 @@ public class EmployeeController extends HttpServlet {
 
 
         Integer id = Integer.parseInt(req.getParameter("id"));
-        if(employeeService.deleteEmployee(id)){
+        if (employeeService.deleteEmployee(id)) {
             req.setAttribute("message", "Deleted successfully");
         }
-        listEmployees(req,resp);
+        listEmployees(req, resp);
     }
 }

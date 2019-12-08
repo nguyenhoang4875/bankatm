@@ -23,7 +23,7 @@
             <form action="${pageContext.request.contextPath}/CustomerController" method="post">
                 <div class="form-group">
 
-                    <input type="text" name="username"  placeholder="Enter Name"
+                    <input type="text" name="username" placeholder="Enter Name"
                            class="form-control"/>
                 </div>
 
@@ -37,7 +37,6 @@
         </div>
     </div>
 </div>
-
 
 
 </body>

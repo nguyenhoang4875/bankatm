@@ -29,7 +29,7 @@
                 <input type="password" name="password" required
                        class="form-control"/>
             </div>
-         <p>${message}</p>
+            <p>${message}</p>
 
             <button class="btn btn-primary" type="submit">Login</button>
         </form>

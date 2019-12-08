@@ -1,8 +1,5 @@
 package com.ltm.bankingService;
 
-import com.ltm.dto.TransferInfor;
-
-import javax.xml.crypto.dsig.TransformService;
 import java.util.Scanner;
 
 public class TransferManager implements Runnable {

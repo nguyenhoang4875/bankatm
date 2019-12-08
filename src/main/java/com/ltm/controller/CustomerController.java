@@ -56,7 +56,7 @@ public class CustomerController extends HttpServlet {
                 withdrawPost(req, resp, session);
                 break;
             case "transfer":
-                transferMoneyPost(req,resp,session);
+                transferMoneyPost(req, resp, session);
                 break;
 
         }
@@ -70,11 +70,11 @@ public class CustomerController extends HttpServlet {
         User loginedUser = (User) session.getAttribute("loginedUser");
         String username = req.getParameter("username");
         int amount = Integer.parseInt(req.getParameter("amount"));
-        TransferInfor transferInfor = new TransferInfor(username,amount);
+        TransferInfor transferInfor = new TransferInfor(username, amount);
         int balanceCurrent = userService.getBalance(loginedUser);
 
         if (amount <= balanceCurrent) {
-            userService.transferMoney(loginedUser,transferInfor);
+            userService.transferMoney(loginedUser, transferInfor);
             req.setAttribute("message", "Transfer success with amount:" + amount);
 
             System.out.println("money after Transfer: " + userService.getBalance(loginedUser));

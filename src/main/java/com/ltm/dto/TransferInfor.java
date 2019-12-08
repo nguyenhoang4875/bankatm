@@ -30,6 +30,6 @@ public class TransferInfor {
 
     @Override
     public String toString() {
-        return String.join("-",username,amount+"");
+        return String.join("-", username, amount + "");
     }
 }

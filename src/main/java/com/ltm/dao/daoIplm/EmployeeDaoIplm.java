@@ -1,7 +1,6 @@
 package com.ltm.dao.daoIplm;
 
 
-
 import com.ltm.dao.EmployeeDao;
 import com.ltm.entities.Employee;
 import com.ltm.jdbc.ConnectionProvider;
@@ -63,14 +62,14 @@ public class EmployeeDaoIplm implements EmployeeDao {
     @Override
     public Employee getEmployeeId(Integer id) {
         Employee employee = null;
-        try{
+        try {
             employee = new Employee();
             String query = "SELECT *FROM employee WHERE id= ?";
             connection = connectionProvider.getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 employee.setId(resultSet.getInt("id"));
                 employee.setName(resultSet.getString("name"));
                 employee.setDob(resultSet.getString("dob"));
@@ -85,28 +84,28 @@ public class EmployeeDaoIplm implements EmployeeDao {
     @Override
     public boolean addEmployee(Employee employee) {
         boolean result = false;
-       try {
+        try {
 
-           String addEmployee = "INSERT INTO employee (name,dob,department) VALUES(?,?,?)";
-           connection = connectionProvider.getConnection();
-           preparedStatement = connection.prepareStatement(addEmployee);
-           preparedStatement.setString(1,employee.getName());
-           preparedStatement.setString(2,employee.getDob());
-           preparedStatement.setString(3,employee.getDepartment());
-           preparedStatement.executeUpdate();
-           result = true;
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }finally {
+            String addEmployee = "INSERT INTO employee (name,dob,department) VALUES(?,?,?)";
+            connection = connectionProvider.getConnection();
+            preparedStatement = connection.prepareStatement(addEmployee);
+            preparedStatement.setString(1, employee.getName());
+            preparedStatement.setString(2, employee.getDob());
+            preparedStatement.setString(3, employee.getDepartment());
+            preparedStatement.executeUpdate();
+            result = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
 
-           try {
-               preparedStatement.close();
-               connection.close();
-           } catch (SQLException e) {
-               e.printStackTrace();
-           }
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-       }
+        }
         return result;
     }
 
@@ -119,15 +118,15 @@ public class EmployeeDaoIplm implements EmployeeDao {
             String addEmployee = "UPDATE employee Set name =?, dob =?, department = ? where id = ?";
             connection = connectionProvider.getConnection();
             preparedStatement = connection.prepareStatement(addEmployee);
-            preparedStatement.setString(1,employee.getName());
-            preparedStatement.setString(2,employee.getDob());
-            preparedStatement.setString(3,employee.getDepartment());
-            preparedStatement.setInt(4,employee.getId());
+            preparedStatement.setString(1, employee.getName());
+            preparedStatement.setString(2, employee.getDob());
+            preparedStatement.setString(3, employee.getDepartment());
+            preparedStatement.setInt(4, employee.getId());
             preparedStatement.executeUpdate();
             result = true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
             try {
                 preparedStatement.close();
@@ -148,12 +147,12 @@ public class EmployeeDaoIplm implements EmployeeDao {
             String addEmployee = "DELETE FROM employee WHERE id=?";
             connection = connectionProvider.getConnection();
             preparedStatement = connection.prepareStatement(addEmployee);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             result = true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
             try {
                 preparedStatement.close();

@@ -27,7 +27,7 @@
             <button class="btn btn-primary" type="submit" name="Action" value="withdraw">Withdraw</button>
         </form>
 
-       <%-- <a href="${pageContext.request.contextPath}/CustomerController?action=setWithdraw">Set Withdraw</a>--%>
+        <%-- <a href="${pageContext.request.contextPath}/CustomerController?action=setWithdraw">Set Withdraw</a>--%>
     </div>
 </div>
 

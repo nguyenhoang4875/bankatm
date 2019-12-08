@@ -7,16 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AppUtils {
-    private static int REDIRECT_ID = 0;
-
     private static final Map<Integer, String> id_uri_map = new HashMap<Integer, String>();
     private static final Map<String, Integer> uri_id_map = new HashMap<String, Integer>();
+    private static int REDIRECT_ID = 0;
 
     // Store user info in Session.
     public static void storeLoginedUser(HttpSession session, User loginedUser) {
         // On the JSP can access via ${loginedUser}
         session.setAttribute("loginedUser", loginedUser);
-        session.setMaxInactiveInterval(30*60);
+        session.setMaxInactiveInterval(30 * 60);
     }
 
     // Get the user information stored in the session.

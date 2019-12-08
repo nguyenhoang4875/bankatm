@@ -32,9 +32,10 @@ public class LoginController extends HttpServlet {
         }
         dispatcher.forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      //  doGet(req,resp);
+        //  doGet(req,resp);
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         User user = new User(username, password);

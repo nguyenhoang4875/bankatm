@@ -25,7 +25,6 @@ public class UserDaoImpl implements UserDao {
     public boolean login(User user) {
         boolean result = false;
         try {
-
             String sql = "SELECT *FROM account WHERE username=? AND password=?";
             connection = connectionProvider.getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -49,7 +48,6 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return result;
-
 
     }
 
@@ -120,8 +118,8 @@ public class UserDaoImpl implements UserDao {
         int balanceSrcBeforeTsf = getBalance(user);
         int balanceDesBeforeTsf = getBalance(new User(transferInfor.getUsername(), ""));
 
-        System.out.println("balance Src before transfer:"+balanceSrcBeforeTsf);
-        System.out.println("balance Des before transfer:"+balanceDesBeforeTsf);
+        System.out.println("balance Src before transfer:" + balanceSrcBeforeTsf);
+        System.out.println("balance Des before transfer:" + balanceDesBeforeTsf);
         System.out.println(transferInfor);
         try {
 
@@ -134,19 +132,19 @@ public class UserDaoImpl implements UserDao {
             PreparedStatement psWithdraw = connection.prepareStatement(sqlWithdraw);
             PreparedStatement psAddMoney = connection.prepareStatement(sqladdMoney);
 
-            psWithdraw.setInt(1,balanceSrcBeforeTsf-transferInfor.getAmount());
-            psWithdraw.setString(2,user.getUser());
-            psWithdraw.setString(3,user.getPassword());
+            psWithdraw.setInt(1, balanceSrcBeforeTsf - transferInfor.getAmount());
+            psWithdraw.setString(2, user.getUser());
+            psWithdraw.setString(3, user.getPassword());
 
             psWithdraw.addBatch();
-            int [] rows1 = psWithdraw.executeBatch();
+            int[] rows1 = psWithdraw.executeBatch();
             System.out.println("------------------ Start Transfer Money Dao---------------");
             System.out.println(Arrays.toString(rows1));
 
-            psAddMoney.setInt(1,balanceDesBeforeTsf+transferInfor.getAmount());
-            psAddMoney.setString(2,transferInfor.getUsername());
+            psAddMoney.setInt(1, balanceDesBeforeTsf + transferInfor.getAmount());
+            psAddMoney.setString(2, transferInfor.getUsername());
             psAddMoney.addBatch();
-            int [] rows2 = psAddMoney.executeBatch();
+            int[] rows2 = psAddMoney.executeBatch();
             System.out.println(Arrays.toString(rows2));
             connection.commit();
             result = true;

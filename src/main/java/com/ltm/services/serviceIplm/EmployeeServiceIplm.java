@@ -1,7 +1,6 @@
 package com.ltm.services.serviceIplm;
 
 
-
 import com.ltm.dao.EmployeeDao;
 import com.ltm.dao.daoIplm.EmployeeDaoIplm;
 import com.ltm.entities.Employee;
@@ -23,17 +22,17 @@ public class EmployeeServiceIplm implements EmployeeService {
 
     @Override
     public Employee getEmployeeId(Integer id) {
-     return   employeeDao.getEmployeeId(id);
+        return employeeDao.getEmployeeId(id);
     }
 
     @Override
     public boolean addEmployee(Employee employee) {
-       return employeeDao.addEmployee(employee);
+        return employeeDao.addEmployee(employee);
     }
 
     @Override
     public boolean updateEmployee(Employee employee) {
-       return  employeeDao.updateEmployee(employee);
+        return employeeDao.updateEmployee(employee);
     }
 
     @Override
