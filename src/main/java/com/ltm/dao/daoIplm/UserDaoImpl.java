@@ -94,11 +94,6 @@ public class UserDaoImpl implements UserDao {
             if (check != 0) {
                 result = true;
             }
-
-
-            if (resultSet.getRow() != 0) {
-                result = true;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -161,5 +156,10 @@ public class UserDaoImpl implements UserDao {
         }
         return result;
 
+    }
+
+    @Override
+    public boolean deposit(User user, int amount) {
+        return withdraw(user, amount);
     }
 }

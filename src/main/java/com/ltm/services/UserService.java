@@ -11,4 +11,6 @@ public interface UserService {
     public boolean withdraw(User user, int amount);
 
     boolean transferMoney(User user, TransferInfor transferInfor);
+
+    public boolean deposit(User user, int amount);
 }

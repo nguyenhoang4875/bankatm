@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public boolean transferMoney(User user, TransferInfor transferInfor) {
         return userDao.transferMoney(user, transferInfor);
     }
+
+    @Override
+    public boolean deposit(User user, int amount) {
+        return userDao.deposit(user, amount);
+    }
 }

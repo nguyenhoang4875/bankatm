@@ -23,7 +23,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
         final String url = props.getProperty("url");*/
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank_atm?useSSL=false&autoReconnect=true", "root", "root");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

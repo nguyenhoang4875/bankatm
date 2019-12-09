@@ -31,13 +31,15 @@
                     <input type="text" name="amount" placeholder="amount money"
                            class="form-control"/>
                 </div>
-
                 <button class="btn btn-primary" type="submit" name="Action" value="transfer">Transfer Money</button>
             </form>
         </div>
+        <div class="col-md-4">
+            <a href="${pageContext.request.contextPath}/LoginController">
+                <button class="btn btn-primary">Back to home</button>
+            </a>
+        </div>
     </div>
 </div>
-
-
 </body>
 </html>

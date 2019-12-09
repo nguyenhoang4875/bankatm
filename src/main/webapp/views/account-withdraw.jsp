@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: hoang
@@ -14,7 +15,6 @@
           crossorigin="anonymous">
 </head>
 <body>
-<h1> Withdraw</h1>
 <hr/>
 <div class="container">
     <div class="col-md-4">
@@ -24,12 +24,24 @@
                 <input type="text" name="amount" placeholder="amount money"
                        class="form-control"/>
             </div>
+            <%
+                System.out.println("todo is:");
+                System.out.println(request.getAttribute("todo"));
+                if (request.getAttribute("todo").equals("withdraw")) {
+            %>
             <button class="btn btn-primary" type="submit" name="Action" value="withdraw">Withdraw</button>
-        </form>
+            <% } else {
+            %>
+            <button class="btn btn-primary" type="submit" name="Action" value="deposit">Deposit</button>
+            <% } %>
 
-        <%-- <a href="${pageContext.request.contextPath}/CustomerController?action=setWithdraw">Set Withdraw</a>--%>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <a href="${pageContext.request.contextPath}/LoginController">
+            <button class="btn btn-primary" >Back to home</button>
+        </a>
     </div>
 </div>
-
 </body>
 </html>

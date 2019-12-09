@@ -7,12 +7,14 @@ import com.ltm.services.serviceIplm.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@WebServlet("/CustomerController")
 public class CustomerController extends HttpServlet {
     private UserService userService;
     private RequestDispatcher dispatcher;
@@ -33,6 +35,9 @@ public class CustomerController extends HttpServlet {
             case "withdraw":
                 withDraw(req, resp, session);
                 break;
+            case "deposit":
+                deposit(req, resp, session);
+                break;
             case "transfer":
                 transferMoney(req, resp, session);
                 break;
@@ -40,9 +45,7 @@ public class CustomerController extends HttpServlet {
                 getBalance(req, resp, session);
                 break;
         }
-
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,6 +58,9 @@ public class CustomerController extends HttpServlet {
             case "withdraw":
                 withdrawPost(req, resp, session);
                 break;
+            case "deposit":
+                depositPost(req, resp, session);
+                break;
             case "transfer":
                 transferMoneyPost(req, resp, session);
                 break;
@@ -65,6 +71,7 @@ public class CustomerController extends HttpServlet {
 
         }
     }
+
 
     private void transferMoneyPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
@@ -129,7 +136,7 @@ public class CustomerController extends HttpServlet {
 
     private void withdrawPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
-
+        req.setAttribute("todo", (String) "withdraw");
         int amount = Integer.parseInt(req.getParameter("amount"));
         System.out.println("in setWithdraw: " + amount);
         int balanceCurrent = userService.getBalance(loginedUser);
@@ -157,6 +164,8 @@ public class CustomerController extends HttpServlet {
 
     private void withDraw(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
+
+        req.setAttribute("todo", (String) "withdraw");
         dispatcher = req.getRequestDispatcher("/views/account-withdraw.jsp");
         try {
             dispatcher.forward(req, resp);
@@ -167,4 +176,36 @@ public class CustomerController extends HttpServlet {
         }
     }
 
+    private void deposit(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+        User loginedUser = (User) session.getAttribute("loginedUser");
+        req.setAttribute("todo", (String) "deposit");
+        dispatcher = req.getRequestDispatcher("/views/account-withdraw.jsp");
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        withDraw(req, resp, session);
+
+    }
+
+    private void depositPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+        User loginedUser = (User) session.getAttribute("loginedUser");
+
+        req.setAttribute("todo", (String) "deposit");
+        int amount = Integer.parseInt(req.getParameter("amount"));
+        System.out.println("in setWithdraw: " + amount);
+        int balanceCurrent = userService.getBalance(loginedUser);
+        userService.deposit(loginedUser, balanceCurrent + amount);
+        dispatcher = req.getRequestDispatcher("/views/account-withdraw.jsp");
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

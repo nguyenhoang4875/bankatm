@@ -7,11 +7,13 @@ import com.ltm.utils.AppUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
     private UserService userService;
     private RequestDispatcher dispatcher;
@@ -25,9 +27,7 @@ public class LoginController extends HttpServlet {
         if (req.getSession().getAttribute("loginedUser") != null) {
             System.out.println("----------in doGet------");
             dispatcher = req.getRequestDispatcher("/views/home.jsp");
-
         } else {
-
             dispatcher = req.getRequestDispatcher("/views/login.jsp");
         }
         dispatcher.forward(req, resp);
@@ -50,6 +50,4 @@ public class LoginController extends HttpServlet {
         dispatcher.forward(req, resp);
 
     }
-
-
 }

@@ -26,6 +26,9 @@
     <div class="col-md-4">
         <a href="${pageContext.request.contextPath}/CustomerController?action=withdraw">Withdraw</a>
     </div>
+    <div class="col-md-4">
+        <a href="${pageContext.request.contextPath}/CustomerController?action=deposit">Deposit</a>
+    </div>
 </div>
 
 </body>
