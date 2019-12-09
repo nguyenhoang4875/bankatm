@@ -15,6 +15,11 @@
           crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
+    <div class="col-md-4">
+        <h1>${todo}</h1>
+    </div>
+</div>
 <hr/>
 <div class="container">
     <div class="col-md-4">
@@ -39,7 +44,7 @@
     </div>
     <div class="col-md-4">
         <a href="${pageContext.request.contextPath}/LoginController">
-            <button class="btn btn-primary" >Back to home</button>
+            <button class="btn btn-primary">Back to home</button>
         </a>
     </div>
 </div>
