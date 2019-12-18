@@ -31,7 +31,7 @@
                     <input type="text" name="amount" placeholder="amount money"
                            class="form-control"/>
                 </div>
-                <button class="btn btn-primary" type="submit" name="Action" value="transfer">Transfer Money</button>
+                <button class="btn btn-primary" type="submit" name="Action" value="transferThread">Transfer Money</button>
             </form>
         </div>
         <div class="col-md-4">

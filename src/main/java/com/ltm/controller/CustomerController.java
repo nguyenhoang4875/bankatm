@@ -82,7 +82,7 @@ public class CustomerController extends HttpServlet {
     }
 
 
-    private void transferMoneyPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+    private void transferMoneyThreadPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
         String username = req.getParameter("username");
         int amount = Integer.parseInt(req.getParameter("amount"));
@@ -90,7 +90,8 @@ public class CustomerController extends HttpServlet {
         int balanceCurrent = userService.getBalance(loginedUser);
 
         if (amount <= balanceCurrent) {
-            userService.transferMoney(loginedUser, transferInfor);
+            transferManager.transferMoneyUseThread(loginedUser,transferInfor);
+          //  userService.transferMoney(loginedUser, transferInfor);
             req.setAttribute("message", "Transfer success with amount:" + amount);
 
             System.out.println("money after Transfer: " + userService.getBalance(loginedUser));
@@ -111,7 +112,7 @@ public class CustomerController extends HttpServlet {
         }
     }
 
-    private void transferMoneyThreadPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+    private void transferMoneyPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
         String username = req.getParameter("username");
         int amount = Integer.parseInt(req.getParameter("amount"));

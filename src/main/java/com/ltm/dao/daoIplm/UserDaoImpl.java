@@ -84,12 +84,13 @@ public class UserDaoImpl implements UserDao {
         boolean result = false;
         try {
 
-            String sql = "UPDATE account SET balance = ? WHERE username=? AND password=?";
+            String sql = "UPDATE account SET balance = ? WHERE username=? ";
+            //AND password=?";
             connection = connectionProvider.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, amount);
             preparedStatement.setString(2, user.getUser());
-            preparedStatement.setString(3, user.getPassword());
+            //preparedStatement.setString(3, user.getPassword());
             int check = preparedStatement.executeUpdate();
             if (check != 0) {
                 result = true;
