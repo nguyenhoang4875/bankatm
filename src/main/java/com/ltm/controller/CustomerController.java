@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/CustomerController")
 public class CustomerController extends HttpServlet {
@@ -88,27 +89,33 @@ public class CustomerController extends HttpServlet {
         int amount = Integer.parseInt(req.getParameter("amount"));
         TransferInfor transferInfor = new TransferInfor(username, amount);
         int balanceCurrent = userService.getBalance(loginedUser);
-
-        if (amount <= balanceCurrent) {
-            transferManager.transferMoneyUseThread(loginedUser,transferInfor);
-          //  userService.transferMoney(loginedUser, transferInfor);
-            req.setAttribute("message", "Transfer success with amount:" + amount);
-
-            System.out.println("money after Transfer: " + userService.getBalance(loginedUser));
-
-            dispatcher = req.getRequestDispatcher("/views/account-withdraw.jsp");
-        } else {
-            req.setAttribute("message", "Amount money  transfer must be less than balance current");
-
-        }
-
-        dispatcher = req.getRequestDispatcher("/views/account-transfer.jsp");
+        PrintWriter printWriter = null;
         try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
+            printWriter = resp.getWriter();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if (amount <= balanceCurrent) {
+            System.out.println(printWriter);
+            printWriter.println("inner transfer money");
+            transferManager.transferMoneyUseThread(printWriter, loginedUser, transferInfor);
+            //  userService.transferMoney(loginedUser, transferInfor);
+            req.setAttribute("message", "Transfer success with amount:" + amount);
+            System.out.println("money after Transfer: " + userService.getBalance(loginedUser));
+
+            //   dispatcher = req.getRequestDispatcher("/views/account-withdraw.jsp");
+        } else {
+            req.setAttribute("message", "Amount money  transfer must be less than balance current");
+            dispatcher = req.getRequestDispatcher("/views/account-transfer.jsp");
+            try {
+                dispatcher.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

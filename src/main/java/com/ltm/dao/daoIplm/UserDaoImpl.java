@@ -18,7 +18,6 @@ public class UserDaoImpl implements UserDao {
 
     public UserDaoImpl() {
         connectionProvider = new ConnectionProviderImpl();
-
     }
 
     @Override
@@ -64,7 +63,7 @@ public class UserDaoImpl implements UserDao {
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
             balance = resultSet.getInt("balance");
-            System.out.println("balance: " + balance);
+            //System.out.println("balance: " + balance);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -119,9 +118,8 @@ public class UserDaoImpl implements UserDao {
         System.out.println(transferInfor);
         try {
 
-            String sqlWithdraw = "UPDATE account SET balance = ? WHERE username=? AND password=?";
+            String sqlWithdraw = "UPDATE account SET balance = ? WHERE username=?";
             String sqladdMoney = "UPDATE account SET balance = ? WHERE username=?";
-
             connection = connectionProvider.getConnection();
             connection.setAutoCommit(false);
 
@@ -130,7 +128,6 @@ public class UserDaoImpl implements UserDao {
 
             psWithdraw.setInt(1, balanceSrcBeforeTsf - transferInfor.getAmount());
             psWithdraw.setString(2, user.getUser());
-            psWithdraw.setString(3, user.getPassword());
 
             psWithdraw.addBatch();
             int[] rows1 = psWithdraw.executeBatch();
