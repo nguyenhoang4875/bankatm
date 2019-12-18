@@ -1,5 +1,6 @@
 package com.ltm.controller;
 
+import com.ltm.bankingService.TransferManager;
 import com.ltm.dto.TransferInfor;
 import com.ltm.dto.User;
 import com.ltm.services.UserService;
@@ -18,9 +19,11 @@ import java.io.IOException;
 public class CustomerController extends HttpServlet {
     private UserService userService;
     private RequestDispatcher dispatcher;
+    private TransferManager transferManager;
 
     public CustomerController() {
         userService = new UserServiceImpl();
+        transferManager = new TransferManager();
     }
 
     @Override
@@ -39,6 +42,9 @@ public class CustomerController extends HttpServlet {
                 deposit(req, resp, session);
                 break;
             case "transfer":
+                transferMoney(req, resp, session);
+                break;
+            case "transferThread":
                 transferMoney(req, resp, session);
                 break;
             default:
@@ -64,6 +70,9 @@ public class CustomerController extends HttpServlet {
             case "transfer":
                 transferMoneyPost(req, resp, session);
                 break;
+            case "transferThread":
+                transferMoneyThreadPost(req, resp, session);
+                break;
 
         }
         if (action.compareTo("withdraw") == 0) {
@@ -74,6 +83,35 @@ public class CustomerController extends HttpServlet {
 
 
     private void transferMoneyPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+        User loginedUser = (User) session.getAttribute("loginedUser");
+        String username = req.getParameter("username");
+        int amount = Integer.parseInt(req.getParameter("amount"));
+        TransferInfor transferInfor = new TransferInfor(username, amount);
+        int balanceCurrent = userService.getBalance(loginedUser);
+
+        if (amount <= balanceCurrent) {
+            userService.transferMoney(loginedUser, transferInfor);
+            req.setAttribute("message", "Transfer success with amount:" + amount);
+
+            System.out.println("money after Transfer: " + userService.getBalance(loginedUser));
+
+            dispatcher = req.getRequestDispatcher("/views/account-withdraw.jsp");
+        } else {
+            req.setAttribute("message", "Amount money  transfer must be less than balance current");
+
+        }
+
+        dispatcher = req.getRequestDispatcher("/views/account-transfer.jsp");
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void transferMoneyThreadPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
         String username = req.getParameter("username");
         int amount = Integer.parseInt(req.getParameter("amount"));
