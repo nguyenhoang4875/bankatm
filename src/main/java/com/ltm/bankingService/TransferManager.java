@@ -50,17 +50,17 @@ public class TransferManager implements Runnable {
         if (banlanceBeforTransfer >= transferInfor.getAmount()) {
 
             userDao.withdraw(user, userDao.getBalance(user) - transferInfor.getAmount());
-            printWriter.println("---------------------------------------");
-            printWriter.println("Money after withdraw of user "+user.getUser()+ ": " + userDao.getBalance(user));
+            printWriter.println("<p>----------------------------------------------------</p>");
+            printWriter.println("<p>Money after withdraw of user "+user.getUser()+ ": " + userDao.getBalance(user)+"</p");
 
             System.out.println("---------------------------------------");
             System.out.println("Money after withdraw of user " +user.getUser()+ ": " + userDao.getBalance(user));
 
             userDao.deposit(userDes, userDao.getBalance(userDes) + transferInfor.getAmount());
-            printWriter.println("Money after deposit of user "+userDes.getUser()+ ": " + userDao.getBalance(userDes));
+            printWriter.println("<p>Money after deposit of user "+userDes.getUser()+ ": " + userDao.getBalance(userDes)+"</p>");
             System.out.println("Money after deposit of user "+userDes.getUser() + ": "+ userDao.getBalance(userDes));
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

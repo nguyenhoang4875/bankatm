@@ -14,16 +14,18 @@
           crossorigin="anonymous">
 </head>
 <body>
-
-
-<div class="col-md-4">
-    <h2> hello ${loginedUser.user}</h2>
-    <h3>Your balance current: ${balanceCurrent}</h3>
-</div>
-<div class="col-md-4">
-    <a href="${pageContext.request.contextPath}/LoginController">
-        <button class="btn btn-primary">Back to home</button>
-    </a>
+<div class="container">
+    <div class="col-md-4">
+        <div class="form-group">
+            <h2> hello ${loginedUser.user}</h2>
+            <h3>Your balance current: ${balanceCurrent}</h3>
+        </div>
+        <div class="form-group">
+            <a href="${pageContext.request.contextPath}/LoginController">
+                <button class="btn btn-primary">Back to home</button>
+            </a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

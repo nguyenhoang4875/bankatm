@@ -46,7 +46,7 @@ public class CustomerController extends HttpServlet {
                 transferMoney(req, resp, session);
                 break;
             case "transferThread":
-                transferMoney(req, resp, session);
+                transferThreadMoney(req, resp, session);
                 break;
             default:
                 getBalance(req, resp, session);
@@ -54,13 +54,11 @@ public class CustomerController extends HttpServlet {
         }
     }
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         HttpSession session = req.getSession();
         String action = req.getParameter("Action");
-        System.out.println("------------- " + action);
-
         switch (action) {
             case "withdraw":
                 withdrawPost(req, resp, session);
@@ -76,30 +74,35 @@ public class CustomerController extends HttpServlet {
                 break;
 
         }
-        if (action.compareTo("withdraw") == 0) {
-            System.out.println("hello doPost withdraw");
-
-        }
     }
 
 
     private void transferMoneyThreadPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
         String username = req.getParameter("username");
+        req.setAttribute("todo", (String) "transferThread");
         int amount = Integer.parseInt(req.getParameter("amount"));
         TransferInfor transferInfor = new TransferInfor(username, amount);
         int balanceCurrent = userService.getBalance(loginedUser);
-        PrintWriter printWriter = null;
-        try {
-            printWriter = resp.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         if (amount <= balanceCurrent) {
+            resp.setContentType("text/html");
+            PrintWriter printWriter = null;
+            try {
+                printWriter = resp.getWriter();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             System.out.println(printWriter);
-            printWriter.println("inner transfer money");
+
+            //     printWriter.println("inner transfer money");
+            printWriter.println("<html><body>");
             transferManager.transferMoneyUseThread(printWriter, loginedUser, transferInfor);
+
+            printWriter.println("</body></html>");
             //  userService.transferMoney(loginedUser, transferInfor);
             req.setAttribute("message", "Transfer success with amount:" + amount);
             System.out.println("money after Transfer: " + userService.getBalance(loginedUser));
@@ -121,6 +124,7 @@ public class CustomerController extends HttpServlet {
 
     private void transferMoneyPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
+        req.setAttribute("todo", (String) "transfer");
         String username = req.getParameter("username");
         int amount = Integer.parseInt(req.getParameter("amount"));
         TransferInfor transferInfor = new TransferInfor(username, amount);
@@ -151,7 +155,21 @@ public class CustomerController extends HttpServlet {
 
     private void transferMoney(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
+        req.setAttribute("todo", (String) "transfer");
+        dispatcher = req.getRequestDispatcher("/views/account-transfer.jsp");
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    private void transferThreadMoney(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+        User loginedUser = (User) session.getAttribute("loginedUser");
+        req.setAttribute("todo", (String) "transferThread");
         dispatcher = req.getRequestDispatcher("/views/account-transfer.jsp");
         try {
             dispatcher.forward(req, resp);
