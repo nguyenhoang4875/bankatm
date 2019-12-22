@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int getBalance(User user) {
+    public synchronized int getBalance(User user) {
         int balance = 0;
         try {
 
@@ -79,7 +79,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean withdraw(User user, int amount) {
+    public synchronized boolean withdraw(User user, int amount) {
         boolean result = false;
         try {
 
@@ -157,7 +157,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean deposit(User user, int amount) {
+    public synchronized boolean deposit(User user, int amount) {
         return withdraw(user, amount);
     }
 }

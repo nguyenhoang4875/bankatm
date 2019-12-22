@@ -19,23 +19,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getBalance(User user) {
+    public synchronized int getBalance(User user) {
 
         return userDao.getBalance(user);
     }
 
     @Override
-    public boolean withdraw(User user, int amount) {
+    public synchronized boolean withdraw(User user, int amount) {
         return userDao.withdraw(user, amount);
     }
 
     @Override
-    public boolean transferMoney(User user, TransferInfor transferInfor) {
+    public synchronized boolean transferMoney(User user, TransferInfor transferInfor) {
         return userDao.transferMoney(user, transferInfor);
     }
 
     @Override
-    public boolean deposit(User user, int amount) {
+    public synchronized boolean deposit(User user, int amount) {
         return userDao.deposit(user, amount);
     }
 }
