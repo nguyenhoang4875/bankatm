@@ -13,6 +13,7 @@ public class TransferManager implements Runnable {
     private static User user;
     private static TransferInfor transferInfor;
     private static PrintWriter printWriter;
+    private static final int NUM_LOOP = 100;
 
     public TransferManager() {
         userDao = new UserDaoImpl();
@@ -34,7 +35,7 @@ public class TransferManager implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < NUM_LOOP; i++) {
             try {
                 transferMoney(user, transferInfor);
             } catch (Exception e) {

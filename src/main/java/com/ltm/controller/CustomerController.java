@@ -21,6 +21,7 @@ public class CustomerController extends HttpServlet {
     private UserService userService;
     private RequestDispatcher dispatcher;
     private TransferManager transferManager;
+    private static final int NUM_LOOP = 100;
 
     public CustomerController() {
         userService = new UserServiceImpl();
@@ -54,7 +55,6 @@ public class CustomerController extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -76,15 +76,14 @@ public class CustomerController extends HttpServlet {
         }
     }
 
-
-    private void transferMoneyThreadPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+    private synchronized void transferMoneyThreadPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         User loginedUser = (User) session.getAttribute("loginedUser");
         String username = req.getParameter("username");
         req.setAttribute("todo", (String) "transferThread");
         int amount = Integer.parseInt(req.getParameter("amount"));
+        amount = amount / NUM_LOOP;
         TransferInfor transferInfor = new TransferInfor(username, amount);
         int balanceCurrent = userService.getBalance(loginedUser);
-
 
         if (amount <= balanceCurrent) {
             resp.setContentType("text/html");
